@@ -816,24 +816,46 @@ section {
 }
 
 /* ==========================================
-   WHY CHOOSE US
+   WHY TEYZIX CORE SLIDER
 ========================================== */
 
-.why-grid{
-    display:grid;
-    grid-template-columns:repeat(3,380px);
+.why-slider{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+    margin-top:50px;
+}
 
-    justify-content:center;
-
+.why-track{
+    display:flex;
     gap:24px;
+    width:max-content;
+    
 
-    max-width:1240px;
-    margin:0 auto;
+    animation:whyScroll 35s linear infinite;
+}
+
+.why-track:hover{
+    animation-play-state:paused;
+}
+
+@keyframes whyScroll{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
+    }
+
 }
 
 /* Card */
 
 .why-card{
+
+    min-width:380px;
     min-height:280px;
 
     padding:32px 24px;
@@ -854,20 +876,24 @@ section {
 
     overflow:hidden;
 
-    transition:.35s ease;
-
     position:relative;
+
+    flex-shrink:0;
+
+    transition:.35s ease;
 }
 
 .why-card:hover{
-    transform:translateY(-6px);
 
-    border-color:rgba(0,200,83,.35);
+    transform:translateY(-10px);
 
-    box-shadow:0 18px 40px rgba(0,0,0,.25);
+    border-color:rgba(0,200,83,.4);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
 }
 
 .why-icon{
+
     width:58px;
     height:58px;
 
@@ -891,6 +917,7 @@ section {
 }
 
 .why-card h4{
+
     margin-bottom:12px;
 
     color:#fff;
@@ -901,6 +928,7 @@ section {
 }
 
 .why-card p{
+
     max-width:280px;
 
     margin:0 auto;
@@ -917,15 +945,18 @@ section {
 
 @media(max-width:768px){
 
-    .why-grid{
-        display:grid;
+    .why-slider{
+        overflow-x:hidden;
+    }
 
-        grid-template-columns:repeat(2,1fr);
-
-        gap:12px;
+    .why-track{
+        gap:14px;
+        animation:whyScrollMobile 25s linear infinite;
     }
 
     .why-card{
+
+        min-width:260px;
         min-height:190px;
 
         padding:18px 12px;
@@ -934,6 +965,7 @@ section {
     }
 
     .why-icon{
+
         width:42px;
         height:42px;
 
@@ -947,6 +979,7 @@ section {
     }
 
     .why-card h4{
+
         font-size:.82rem;
 
         margin-bottom:8px;
@@ -955,11 +988,24 @@ section {
     }
 
     .why-card p{
+
         font-size:.68rem;
 
         line-height:1.45;
 
         max-width:100%;
+    }
+
+}
+
+@keyframes whyScrollMobile{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
     }
 
 }
@@ -3838,99 +3884,130 @@ body{
 
 </section>
 
-    <!-- ======================================
-         WHY TEYZIX CORE
-    ======================================= -->
-    
+   <!-- ======================================
+     WHY TEYZIX CORE
+======================================= -->
 
-        <div class="s-hdr center fi">
+<div class="s-hdr center fi">
 
-            <div class="s-tag">
-                Why Teyzix Core
+    <div class="s-tag">
+        Why Teyzix Core
+    </div>
+
+    <h2 class="s-title">
+        Built Different.
+        <em style="color: var(--green); font-style: normal;">
+            Deliver Better.
+        </em>
+    </h2>
+
+</div>
+
+<div class="why-slider">
+
+    <div class="why-track">
+
+        <!-- Original Cards -->
+
+        <div class="why-card fast-turnaround fi">
+            <div class="why-icon">
+                <i class="fas fa-bolt"></i>
             </div>
-
-            <h2 class="s-title">
-                Built Different.
-                <em style="color: var(--green); font-style: normal;">
-                    Deliver Better.
-                </em>
-            </h2>
-
+            <h4>Fast Turnaround</h4>
+            <p>Agile cycles that deliver quality results without delay.</p>
         </div>
 
-        <div class="why-grid">
+        <div class="why-card secure-default fi">
+            <div class="why-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4>Secure by Default</h4>
+            <p>Security best practices baked into every line of code.</p>
+        </div>
 
-<div class="why-card fast-turnaround fi">
-    <div class="why-icon">
-        <i class="fas fa-bolt"></i>
+        <div class="why-card growth-focused fi">
+            <div class="why-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h4>Growth Focused</h4>
+            <p>Every decision is made with your growth as the north star.</p>
+        </div>
+
+        <div class="why-card true-partnership fi">
+            <div class="why-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h4>True Partnership</h4>
+            <p>Transparent communication and collaboration from day one.</p>
+        </div>
+
+        <div class="why-card global-standards fi">
+            <div class="why-icon">
+                <i class="fas fa-globe"></i>
+            </div>
+            <h4>Global Standards</h4>
+            <p>International-grade solutions with local understanding.</p>
+        </div>
+
+        <div class="why-card post-launch fi">
+            <div class="why-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h4>Post-Launch Support</h4>
+            <p>We stay with you after launch for updates, maintenance, optimization, and scaling support.</p>
+        </div>
+
+        <!-- Duplicate Cards For Infinite Loop -->
+
+        <div class="why-card fast-turnaround">
+            <div class="why-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h4>Fast Turnaround</h4>
+            <p>Agile cycles that deliver quality results without delay.</p>
+        </div>
+
+        <div class="why-card secure-default">
+            <div class="why-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4>Secure by Default</h4>
+            <p>Security best practices baked into every line of code.</p>
+        </div>
+
+        <div class="why-card growth-focused">
+            <div class="why-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h4>Growth Focused</h4>
+            <p>Every decision is made with your growth as the north star.</p>
+        </div>
+
+        <div class="why-card true-partnership">
+            <div class="why-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h4>True Partnership</h4>
+            <p>Transparent communication and collaboration from day one.</p>
+        </div>
+
+        <div class="why-card global-standards">
+            <div class="why-icon">
+                <i class="fas fa-globe"></i>
+            </div>
+            <h4>Global Standards</h4>
+            <p>International-grade solutions with local understanding.</p>
+        </div>
+
+        <div class="why-card post-launch">
+            <div class="why-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h4>Post-Launch Support</h4>
+            <p>We stay with you after launch for updates, maintenance, optimization, and scaling support.</p>
+        </div>
+
     </div>
-
-    <h4>Fast Turnaround</h4>
-
-    <p>
-        Agile cycles that deliver quality results without delay.
-    </p>
-</div>
-
-<div class="why-card secure-default fi">
-    <div class="why-icon">
-        <i class="fas fa-shield-alt"></i>
-    </div>
-
-    <h4>Secure by Default</h4>
-
-    <p>
-        Security best practices baked into every line of code.
-    </p>
-</div>
-
-<div class="why-card growth-focused fi">
-    <div class="why-icon">
-        <i class="fas fa-chart-line"></i>
-    </div>
-
-    <h4>Growth Focused</h4>
-
-    <p>
-        Every decision is made with your growth as the north star.
-    </p>
-</div>
-
-<div class="why-card true-partnership fi">
-    <div class="why-icon">
-        <i class="fas fa-handshake"></i>
-    </div>
-
-    <h4>True Partnership</h4>
-
-    <p>
-        Transparent communication and collaboration from day one.
-    </p>
-</div>
-
-<div class="why-card global-standards fi">
-    <div class="why-icon">
-        <i class="fas fa-globe"></i>
-    </div>
-
-    <h4>Global Standards</h4>
-
-    <p>
-        International-grade solutions with local understanding.
-    </p>
-</div>
-
-<div class="why-card post-launch fi">
-    <div class="why-icon">
-        <i class="fas fa-tools"></i>
-    </div>
-
-    <h4>Post-Launch Support</h4>
-
-    <p>
-        We stay with you after launch for updates, maintenance, optimization, and scaling support.
-    </p>
-</div>
 
 </div>
 

@@ -1,0 +1,6151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teyzix Core — Core of Innovation</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+<style>
+:root {
+    --green: #0f754a;
+    --green-light: #2cb372;
+    --green-dark: #007B33;
+    --green-glow: rgba(0, 200, 83, 0.15);
+
+    --bg: #0B0F14;
+    --bg2: #0E1520;
+
+    --card: #111826;
+    --card2: #161F2E;
+
+    --border: rgba(0, 200, 83, 0.18);
+
+    --text: #F0F4FF;
+    --muted: #7A8BA0;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   ANIMATED GLOBE BACKGROUND
+========================================== */
+@keyframes globeSpin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ==========================================
+   SUBTLE RADIAL GLOW
+========================================== */
+.glow-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70vw;
+    height: 70vh;
+    background: radial-gradient(
+        ellipse,
+        rgba(0, 200, 83, 0.04) 0%,
+        transparent 70%
+    );
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ==========================================
+   GRID OVERLAY
+========================================== */
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 200, 83, 0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 200, 83, 0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+}
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    height: 70px;
+    padding: 0 5%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(11, 15, 20, 0.88);
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-logo img{
+    height:55px;
+    width:auto;
+    max-width:220px;
+    object-fit:contain;
+    display:block;
+}
+
+.nav-logo-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+
+    color: var(--green);
+    letter-spacing: 0.06em;
+}
+
+/* Desktop Links */
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    color: var(--muted);
+    text-decoration: none;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    transition: color 0.2s ease;
+}
+
+.nav-links a::after {
+    content: '';
+
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--green);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* CTA Button */
+.nav-cta {
+    padding: 9px 22px;
+
+    background: var(--green);
+    color: #000;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+    transition: all 0.25s ease;
+
+    box-shadow: 0 0 22px rgba(0, 200, 83, 0.3);
+}
+
+.nav-cta:hover {
+    background: var(--green-light);
+    box-shadow: 0 0 34px rgba(0, 200, 83, 0.55);
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 4px;
+
+    border: none;
+    background: none;
+
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+
+    width: 24px;
+    height: 2px;
+
+    background: var(--text);
+    transition: all 0.3s ease;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+
+    z-index: 999;
+
+    padding: 24px 5%;
+
+    background: rgba(11, 15, 20, 0.99);
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-menu a {
+    display: block;
+
+    padding: 14px 0;
+
+    color: var(--text);
+    text-decoration: none;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-menu.open {
+    display: flex;
+}
+/* ==========================================
+   PAGE SYSTEM
+========================================== */
+.page {
+    position: relative;
+    z-index: 1;
+    display: none;
+    padding-top: 70px;
+}
+
+.page.active {
+    display: block;
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+.hero {
+    position: relative;
+    overflow: hidden;
+
+    min-height: calc(100vh - 70px);
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    padding: 80px 5% 60px;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 620px;
+
+    animation: fadeUp 0.9s ease both;
+}
+
+/* Hero Badge */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 28px;
+    padding: 6px 16px;
+
+    border: 1px solid rgba(0, 200, 83, 0.25);
+    border-radius: 100px;
+
+    background: rgba(0, 200, 83, 0.08);
+
+    color: var(--green);
+    font-size: 0.76rem;
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+
+    background: var(--green);
+    border-radius: 50%;
+
+    animation: blink 1.6s infinite;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+/* Hero Heading */
+.hero h1 {
+    margin-bottom: 22px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 5.2vw, 4rem);
+    font-weight: 900;
+
+    line-height: 1.07;
+    letter-spacing: -0.025em;
+}
+
+.hero h1 em {
+    color: var(--green);
+    font-style: normal;
+}
+
+/* Hero Description */
+.hero p {
+    max-width: 500px;
+    margin-bottom: 40px;
+
+    color: var(--muted);
+
+    font-size: 1.05rem;
+    line-height: 1.78;
+}
+
+/* Hero Buttons */
+.hero-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* Primary Button */
+.btn-primary {
+    padding: 13px 30px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--green);
+    color: #000;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+
+    letter-spacing: 0.02em;
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+
+    box-shadow: 0 0 28px rgba(0, 200, 83, 0.35);
+}
+
+.btn-primary:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+
+    box-shadow: 0 0 44px rgba(0, 200, 83, 0.55);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    padding: 13px 30px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+    border-color: var(--green);
+    color: var(--green);
+
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   HERO LOGO SHOWCASE
+========================================== */
+.hero-visual{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.hero-visual img{
+    width:100%;
+    max-width:850px;
+    height:auto;
+    object-fit:contain;
+
+    filter:
+      drop-shadow(0 0 40px rgba(0,200,83,.25))
+      drop-shadow(0 0 90px rgba(0,200,83,.15));
+}
+/* ==========================================
+   ANIMATIONS
+========================================== */
+@keyframes orb {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   STATS BAR
+========================================== */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    background:var(--bg2);
+
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+}
+
+.stat{
+    padding:36px 20px;
+
+    text-align:center;
+
+    border-right:1px solid var(--border);
+
+    transition:.3s ease;
+}
+
+.stat:hover{
+    background:rgba(0,200,83,.03);
+}
+
+.stat:last-child{
+    border-right:none;
+}
+
+.stat-num{
+    font-family:'Poppins',sans-serif;
+
+    font-size:2.4rem;
+    font-weight:900;
+
+    color:var(--green);
+
+    line-height:1;
+}
+
+.stat-lbl{
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:.78rem;
+
+    letter-spacing:.06em;
+
+    text-transform:uppercase;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .stat{
+        padding:22px 6px;
+    }
+
+    .stat-num{
+        font-size:1.8rem;
+    }
+
+    .stat-lbl{
+        font-size:.55rem;
+
+        line-height:1.3;
+
+        margin-top:6px;
+    }
+
+}
+
+/* ==========================================
+   GENERIC SECTION STYLES
+========================================== */
+section {
+    padding: 90px 5%;
+}
+
+.s-tag {
+    display: inline-block;
+
+    margin-bottom: 10px;
+    padding-left: 10px;
+
+    border-left: 3px solid var(--green);
+
+    color: var(--green);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.s-title {
+    margin-bottom: 14px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.85rem, 3.4vw, 2.7rem);
+    font-weight: 800;
+
+    line-height: 1.15;
+}
+
+.s-sub {
+    max-width: 560px;
+
+    color: var(--muted);
+
+    font-size: 0.97rem;
+    line-height: 1.72;
+}
+
+.s-hdr {
+    margin-bottom: 56px;
+}
+
+.s-hdr.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+.s-hdr.center .s-sub {
+    text-align: center;
+}
+
+/* ==========================================
+   SERVICES SECTION
+========================================== */
+
+.svc-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+}
+
+.svc-card{
+    display:block;
+
+    overflow:hidden;
+    position:relative;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:22px;
+
+    transition:.35s ease;
+
+    text-decoration:none !important;
+    color:inherit !important;
+}
+
+.svc-card *{
+    text-decoration:none !important;
+}
+
+.svc-card:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(0,200,83,.35);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.20);
+}
+
+/* Image */
+
+.svc-thumb{
+    width:100%;
+    height:180px;
+
+    overflow:hidden;
+}
+
+.svc-thumb img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    display:block;
+
+    transition:.5s ease;
+}
+
+.svc-card:hover .svc-thumb img{
+    transform:scale(1.05);
+}
+
+/* Content */
+
+.svc-card h3{
+    margin:20px 20px 12px;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1.15rem;
+    font-weight:700;
+
+    color:var(--text);
+}
+
+.svc-card p{
+    margin:0 20px 18px;
+
+    color:var(--muted);
+
+    font-size:.88rem;
+    line-height:1.7;
+}
+
+/* Features */
+
+.svc-feats{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+
+    padding:0 20px 24px;
+}
+
+.svc-feat{
+    color:var(--muted);
+    font-size:.82rem;
+}
+
+.svc-feat::before{
+    content:"✓ ";
+    color:var(--green);
+    font-weight:700;
+}
+
+/* Tablet */
+
+@media(max-width:1200px){
+
+    .svc-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .svc-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .svc-thumb{
+        height:120px;
+    }
+
+    .svc-card h3{
+        margin:12px 12px 8px;
+        font-size:.9rem;
+    }
+
+    .svc-card p{
+        margin:0 12px 10px;
+        font-size:.72rem;
+        line-height:1.5;
+    }
+
+    .svc-feats{
+        padding:0 12px 14px;
+        gap:5px;
+    }
+
+    .svc-feat{
+        font-size:.68rem;
+    }
+
+}
+
+/* ==========================================
+   WHY CHOOSE US
+========================================== */
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,380px);
+
+    justify-content:center;
+
+    gap:24px;
+
+    max-width:1240px;
+    margin:0 auto;
+}
+
+/* Card */
+
+.why-card{
+    min-height:280px;
+
+    padding:32px 24px;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    text-align:center;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+
+    position:relative;
+}
+
+.why-card:hover{
+    transform:translateY(-6px);
+
+    border-color:rgba(0,200,83,.35);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+}
+
+.why-icon{
+    width:58px;
+    height:58px;
+
+    margin-bottom:16px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(0,200,83,.15);
+
+    color:var(--green);
+
+    flex-shrink:0;
+}
+
+.why-icon i{
+    font-size:22px;
+}
+
+.why-card h4{
+    margin-bottom:12px;
+
+    color:#fff;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1.15rem;
+    font-weight:700;
+}
+
+.why-card p{
+    max-width:280px;
+
+    margin:0 auto;
+
+    color:rgba(255,255,255,.90);
+
+    font-size:.9rem;
+    line-height:1.7;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .why-grid{
+        display:grid;
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:12px;
+    }
+
+    .why-card{
+        min-height:190px;
+
+        padding:18px 12px;
+
+        border-radius:14px;
+    }
+
+    .why-icon{
+        width:42px;
+        height:42px;
+
+        margin-bottom:10px;
+
+        border-radius:12px;
+    }
+
+    .why-icon i{
+        font-size:16px;
+    }
+
+    .why-card h4{
+        font-size:.82rem;
+
+        margin-bottom:8px;
+
+        line-height:1.3;
+    }
+
+    .why-card p{
+        font-size:.68rem;
+
+        line-height:1.45;
+
+        max-width:100%;
+    }
+
+}
+
+/* ==========================================
+   BACKGROUND IMAGES
+========================================== */
+
+.fast-turnaround{
+    background-image:
+        linear-gradient(
+            rgba(6,12,24,.45),
+            rgba(6,12,24,.55)
+        ),
+        url("Images/fast-turnaround_img.png");
+}
+
+.secure-default{
+    background-image:
+        linear-gradient(
+            rgba(6,12,24,.45),
+            rgba(6,12,24,.55)
+        ),
+        url("Images/security_img.png");
+}
+
+.growth-focused{
+    background-image:
+        linear-gradient(
+            rgba(6,12,24,.45),
+            rgba(6,12,24,.55)
+        ),
+        url("Images/growth_img.png");
+}
+
+.true-partnership{
+    background-image:
+        linear-gradient(
+            rgba(6,12,24,.45),
+            rgba(6,12,24,.55)
+        ),
+        url("Images/partnership_img.png");
+}
+
+.global-standards{
+    background-image:
+        linear-gradient(
+            rgba(6,12,24,.45),
+            rgba(6,12,24,.55)
+        ),
+        url("Images/global-standards_img.png");
+}
+
+.post-launch{
+    background-image:
+        linear-gradient(
+            rgba(6,12,24,.45),
+            rgba(6,12,24,.55)
+        ),
+        url("Images/post-launch-support_img.png");
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .why-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .why-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ==========================================
+   PORTFOLIO SECTION
+========================================== */
+
+.port-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    gap:26px;
+}
+
+/* ==========================================
+   PROJECT CARD
+========================================== */
+
+.proj-card{
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:22px;
+
+    transition:.35s ease;
+
+    height:100%;
+}
+
+.proj-card:hover{
+    transform:translateY(-6px);
+
+    border-color:rgba(0,200,83,.35);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.30);
+}
+
+/* ==========================================
+   PROJECT IMAGE
+========================================== */
+
+.proj-thumb{
+    position:relative;
+
+    width:100%;
+    height:220px;
+
+    overflow:hidden;
+}
+
+.proj-thumb img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    object-position:center;
+
+    display:block;
+
+    transition:.6s ease;
+}
+
+.proj-card:hover .proj-thumb img{
+    transform:scale(1.06);
+}
+
+.proj-thumb::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.05)
+    );
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.proj-body{
+    display:flex;
+    flex-direction:column;
+
+    flex:1;
+
+    padding:24px;
+}
+
+.proj-body h3{
+    margin-bottom:12px;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1.35rem;
+    font-weight:700;
+
+    line-height:1.4;
+
+    color:#fff;
+}
+
+.proj-body p{
+    color:var(--muted);
+
+    font-size:.92rem;
+    line-height:1.8;
+
+    margin-bottom:18px;
+}
+
+.featured-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+    margin-bottom:25px;
+}
+
+.featured-badge{
+    display:inline-flex;
+    align-items:center;
+
+    padding:6px 12px;
+
+    margin-bottom:14px;
+
+    border-radius:999px;
+
+    background:rgba(0,200,83,.10);
+
+    border:1px solid rgba(0,200,83,.20);
+
+    color:var(--green);
+
+    font-size:.72rem;
+    font-weight:700;
+
+    text-transform:uppercase;
+    letter-spacing:.08em;
+}
+
+@media(max-width:768px){
+
+    .featured-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+.hidden-projects{
+    display:none;
+}
+
+.hidden-projects.show{
+    display:block;
+}
+
+/* Projects Container */
+
+.projects-wrap{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+
+    gap:22px;
+}
+
+/* Project Cards */
+
+.projects-wrap .proj-card{
+    flex:0 1 calc(33.333% - 15px);
+
+    max-width:520px;
+    min-width:320px;
+}
+
+/* Tablet */
+
+@media(max-width:1024px){
+
+    .projects-wrap .proj-card{
+        flex:0 1 calc(50% - 12px);
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .projects-wrap .proj-card{
+        flex:0 1 100%;
+    }
+
+}
+
+.show-more-btn{
+    display:block;
+
+    width:260px;
+
+    margin:25px auto 25px auto;
+
+    padding:15px 24px;
+
+    border:none;
+    border-radius:12px;
+
+    background:var(--green);
+
+    color:#000;
+
+    font-size:.95rem;
+    font-weight:700;
+}
+
+.show-more-btn:hover{
+    transform:translateY(-2px);
+}
+/* ==========================================
+   TECH STACK
+========================================== */
+
+.proj-tags{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+.tag{
+    padding:8px 14px;
+
+    background:rgba(0,200,83,.08);
+
+    border:1px solid rgba(0,200,83,.15);
+
+    border-radius:999px;
+
+    color:var(--green);
+
+    font-size:.78rem;
+    font-weight:600;
+
+    transition:.3s ease;
+}
+
+.tag:hover{
+    background:rgba(0,200,83,.15);
+
+    border-color:rgba(0,200,83,.35);
+}
+
+/* ==========================================
+   PROJECT RESULT
+========================================== */
+
+.proj-result{
+    color:var(--green);
+
+    font-size:.9rem;
+    line-height:1.6;
+    font-weight:600;
+
+    margin-bottom:22px;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.proj-actions{
+    display:flex;
+    gap:12px;
+
+    margin-top:auto;
+}
+
+.proj-actions a{
+    flex:1;
+
+    text-align:center;
+    text-decoration:none;
+}
+
+.btn-primary{
+    padding:12px 18px;
+
+    background:var(--green);
+
+    color:#000;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    transition:.3s ease;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+}
+
+.btn-secondary{
+    padding:12px 18px;
+
+    border:1px solid var(--border);
+
+    color:#fff;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    transition:.3s ease;
+}
+
+.btn-secondary:hover{
+    border-color:var(--green);
+
+    color:var(--green);
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:992px){
+
+    .port-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .port-grid{
+        grid-template-columns:1fr;
+    }
+
+    .proj-thumb{
+        height:200px;
+    }
+
+    .proj-body{
+        padding:20px;
+    }
+
+    .proj-body h3{
+        font-size:1.15rem;
+    }
+
+    .proj-actions{
+        flex-direction:column;
+    }
+
+}
+
+/* ==========================================
+   TESTIMONIALS SECTION
+========================================== */
+.testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+    gap: 22px;
+}
+
+.testi-card {
+    padding: 30px 26px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.reviews-cta{
+    max-width:900px;
+    margin:80px auto;
+    padding:50px 40px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:20px;
+
+    text-align:center;
+}
+
+.reviews-badge{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    padding:18px 32px;
+
+    border-radius:20px;
+
+    background:rgba(0,200,83,.08);
+
+    margin-bottom:30px;
+}
+
+.review-stars{
+    font-size:42px;
+    line-height:1;
+
+    color:#FFD54A;
+
+    margin-bottom:10px;
+
+    letter-spacing:6px;
+}
+
+.review-rating{
+    color:var(--green);
+
+    font-size:1.1rem;
+    font-weight:600;
+}
+
+.reviews-cta h3{
+    margin:0 0 16px;
+
+    font-size:2rem;
+    font-weight:700;
+
+    text-align:center;
+}
+
+.reviews-cta p{
+    max-width:650px;
+    margin:0 auto 30px;
+
+    color:var(--muted);
+
+    line-height:1.7;
+    text-align:center;
+}
+
+.reviews-cta .btn-primary{
+    display:inline-flex;
+}
+.testi-q {
+    margin-bottom: 8px;
+
+    color: var(--green);
+
+    opacity: 0.35;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.testi-card p {
+    margin-bottom: 18px;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.testi-author {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: linear-gradient(
+        135deg,
+        var(--green-dark),
+        var(--green)
+    );
+
+    border-radius: 50%;
+
+    color: #000;
+
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.testi-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.testi-role {
+    color: var(--muted);
+
+    font-size: 0.76rem;
+}
+
+/* ==========================================
+   FAQ SECTION
+========================================== */
+
+.faq.section{
+    padding-top:20px;
+    padding-bottom:100px;
+}
+
+/* Heading */
+
+.faq .sec-head{
+    text-align:center;
+
+    max-width:900px;
+
+    margin:0 auto 70px;
+}
+
+.faq .sec-head .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:16px;
+
+    color:var(--green);
+
+    font-size:.95rem;
+    font-weight:700;
+
+    letter-spacing:4px;
+    text-transform:uppercase;
+
+    margin-bottom:20px;
+}
+
+.faq .sec-head .eyebrow::before,
+.faq .sec-head .eyebrow::after{
+    content:"";
+
+    width:45px;
+    height:2px;
+
+    background:var(--green);
+}
+
+.faq .sec-head h2{
+    font-family:'Poppins',sans-serif;
+
+    font-size:3rem;
+    font-weight:800;
+
+    line-height:1.1;
+
+    margin-bottom:18px;
+
+    color:#fff;
+}
+
+.faq .sec-head h2 span{
+    color:var(--green);
+}
+
+.faq .sec-head p{
+    max-width:750px;
+
+    margin:0 auto;
+
+    color:#69F0AE;
+
+    font-size:1.1rem;
+    line-height:1.8;
+}
+
+/* FAQ Container */
+
+.faq-wrap{
+    max-width:1050px;
+
+    margin:0 auto;
+}
+
+/* FAQ Card */
+
+.faq-item{
+    margin-bottom:18px;
+
+    background:rgba(7,16,34,.95);
+
+    border:1px solid rgba(0,200,83,.15);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.3s ease;
+}
+
+.faq-item:hover{
+    border-color:rgba(0,200,83,.45);
+
+    transform:translateY(-2px);
+}
+
+.faq-item.active{
+    border-color:rgba(0,200,83,.5);
+
+    box-shadow:0 15px 40px rgba(0,200,83,.12);
+}
+
+/* Question */
+
+.faq-question{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:28px 34px;
+
+    background:none;
+    border:none;
+
+    cursor:pointer;
+
+    color:#fff;
+
+    font-size:1.25rem;
+    font-weight:700;
+
+    text-align:left;
+}
+
+.faq-question span{
+    color:var(--green);
+
+    font-size:2.2rem;
+    font-weight:700;
+
+    transition:.3s ease;
+
+    flex-shrink:0;
+}
+
+/* Answer */
+
+.faq-answer{
+    max-height:0;
+
+    overflow:hidden;
+
+    transition:max-height .4s ease;
+}
+
+.faq-answer p{
+    padding:0 34px 30px;
+
+    color:var(--muted);
+
+    font-size:1rem;
+    line-height:1.9;
+}
+
+/* Open State */
+
+.faq-item.active .faq-answer{
+    max-height:500px;
+}
+
+.faq-item.active .faq-question span{
+    transform:rotate(45deg);
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .faq.section{
+        padding-top:10px;
+        padding-bottom:70px;
+    }
+
+    .faq .sec-head{
+        margin-bottom:50px;
+    }
+
+    .faq .sec-head h2{
+        font-size:2.5rem;
+    }
+
+    .faq .sec-head p{
+        font-size:.95rem;
+    }
+
+    .faq-question{
+        padding:20px;
+
+        font-size:1rem;
+    }
+
+    .faq-answer p{
+        padding:0 20px 20px;
+    }
+
+    .faq-question span{
+        font-size:1.7rem;
+    }
+
+}
+
+/* ==========================================
+   ABOUT SECTION
+========================================== */
+
+.about-wrap{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:80px;
+
+    align-items:center;
+}
+
+/* ==========================================
+   LOGO SIDE
+========================================== */
+
+.about-logo{
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.about-logo img{
+    width:min(450px,100%);
+
+    filter:drop-shadow(
+        0 0 60px rgba(0,200,83,.40)
+    );
+
+    transition:.35s ease;
+}
+
+.about-logo:hover img{
+    transform:scale(1.03);
+}
+
+/* ==========================================
+   CONTENT SIDE
+========================================== */
+
+.about-content{
+    width:100%;
+}
+
+.about-content p{
+    color:var(--muted);
+
+    text-align:justify;
+
+    line-height:1.9;
+
+    font-size:.96rem;
+}
+
+/* ==========================================
+   MISSION & VISION
+========================================== */
+
+.mv-grid{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:24px;
+
+    margin-top:32px;
+
+    width:100%;
+}
+
+.mv-card{
+    padding:28px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    transition:.3s ease;
+
+    height:100%;
+}
+
+.mv-card:hover{
+    transform:translateY(-4px);
+
+    border-color:rgba(0,200,83,.35);
+
+    box-shadow:0 12px 28px rgba(0,0,0,.15);
+}
+
+.mv-card h4{
+    margin-bottom:14px;
+
+    color:var(--green);
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:1.25rem;
+    font-weight:700;
+}
+
+.mv-card p{
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:.92rem;
+
+    line-height:1.85;
+
+    text-align:left;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:992px){
+
+    .about-wrap{
+        gap:50px;
+    }
+
+    .about-logo img{
+        width:min(380px,100%);
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .about-wrap{
+        grid-template-columns:1fr;
+
+        gap:40px;
+    }
+
+    .about-logo{
+        order:3;
+    }
+
+    .about-logo img{
+        width:min(320px,90%);
+    }
+
+    .about-content p{
+        text-align:left;
+
+        font-size:.9rem;
+
+        line-height:1.8;
+    }
+
+    .mv-grid{
+        grid-template-columns:1fr;
+
+        gap:16px;
+    }
+
+    .mv-card{
+        padding:22px;
+    }
+
+    .mv-card h4{
+        font-size:1.1rem;
+    }
+
+    .mv-card p{
+        font-size:.86rem;
+    }
+
+}
+
+/* ==========================================
+   VALUES SECTION
+========================================== */
+
+.values-section{
+    position:relative;
+}
+
+.values-section::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:url("./Images/values-bg_img.png");
+    background-size:cover;
+    background-position:center;
+
+    opacity:.18;
+
+    z-index:0;
+}
+
+.values-section > *{
+    position:relative;
+    z-index:1;
+}
+
+/* ==========================================
+   VALUES LIST
+========================================== */
+
+.val-list{
+    display:flex;
+    flex-direction:column;
+
+    gap:18px;
+
+    max-width:1200px;
+    margin:35px auto 0;
+}
+
+/* ==========================================
+   VALUE CARD
+========================================== */
+
+.val-item{
+    display:flex;
+    align-items:flex-start;
+
+    gap:18px;
+
+    padding:20px;
+
+    background:rgba(255,255,255,.03);
+
+    backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+
+    transition:.35s ease;
+}
+
+.val-item:hover{
+    transform:translateY(-4px);
+
+    border-color:rgba(0,200,83,.35);
+
+    background:rgba(255,255,255,.05);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.18);
+}
+
+/* ==========================================
+   ICON
+========================================== */
+
+.val-icon{
+    width:60px;
+    height:60px;
+    min-width:60px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(0,200,83,.10);
+
+    color:var(--green);
+
+    transition:.3s ease;
+}
+
+.val-icon i{
+    font-size:22px;
+}
+
+.val-item:hover .val-icon{
+    transform:translateY(-3px);
+
+    background:rgba(0,200,83,.18);
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.val-item h5{
+    margin-bottom:6px;
+
+    color:var(--text);
+
+    font-size:1rem;
+    font-weight:700;
+
+    font-family:'Poppins',sans-serif;
+}
+
+.val-item p{
+    color:rgba(255,255,255,.75);
+
+    font-size:.88rem;
+    line-height:1.7;
+
+    margin:0;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .val-item{
+        padding:18px;
+    }
+
+    .val-icon{
+        width:54px;
+        height:54px;
+        min-width:54px;
+    }
+
+    .val-icon i{
+        font-size:20px;
+    }
+
+}
+
+/* ==========================================
+   CONTACT SECTION
+========================================== */
+.contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 52px;
+
+    align-items: start;
+}
+
+/* Contact Information */
+.c-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.c-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    transition: border-color 0.25s ease;
+}
+
+.c-item:hover {
+    border-color: var(--green);
+}
+
+.c-ico{
+    width:58px;
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(0,200,83,.08);
+
+    color:var(--green);
+
+    font-size:22px;
+
+    flex-shrink:0;
+}
+
+.c-item{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+}
+
+.c-item a{
+    color:var(--muted);
+    text-decoration:none;
+    transition:.3s ease;
+}
+
+.c-item a:hover{
+    color:var(--green);
+}
+
+.c-lbl{
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+/* Social Buttons */
+.soc-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+
+    margin-top:4px;
+}
+
+.soc-btn{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:10px 14px;
+
+    background:var(--bg);
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    color:var(--muted);
+
+    font-size:.78rem;
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:.25s ease;
+}
+
+.soc-btn:hover{
+    border-color:var(--green);
+
+    color:var(--green);
+
+    transform:translateY(-2px);
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .soc-row{
+        display:grid;
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:12px;
+    }
+
+    .soc-btn{
+        width:100%;
+
+        justify-content:center;
+
+        padding:12px 10px;
+    }
+
+}
+/* ==========================================
+   QUICK RESPONSE CARD
+========================================== */
+
+.quick-response{
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    padding:24px;
+
+    margin-top:20px;
+
+    transition:.3s ease;
+}
+
+.quick-response:hover{
+    border-color:rgba(0,200,83,.35);
+
+    transform:translateY(-3px);
+}
+
+.quick-response-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin:0 0 12px;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1rem;
+    font-weight:700;
+
+    color:var(--text);
+}
+
+.quick-response-title i{
+    color:var(--green);
+}
+
+.quick-response p{
+    color:var(--muted);
+
+    font-size:.92rem;
+    line-height:1.75;
+
+    margin:0 0 18px;
+}
+
+/* Stats */
+
+.quick-stats{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
+}
+
+.quick-stat{
+    text-align:center;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:rgba(0,200,83,.08);
+    border:1px solid rgba(0,200,83,.15);
+}
+
+.quick-stat-value{
+    color:var(--green);
+
+    font-size:1.4rem;
+    font-weight:700;
+
+    margin-bottom:4px;
+}
+
+.quick-stat-label{
+    color:var(--muted);
+
+    font-size:.85rem;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .quick-stats{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ==========================================
+   CONTACT MAP
+========================================== */
+
+
+.contact-map{
+    margin-top:20px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    overflow:hidden;
+}
+
+.contact-map-title{
+    padding:18px 20px;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1rem;
+    font-weight:700;
+
+    color:var(--text);
+}
+
+.contact-map-title i{
+    color:var(--green);
+    margin-right:8px;
+}
+
+.contact-map iframe{
+    width:100%;
+    height:250px;
+
+    border:0;
+
+    display:block;
+}
+
+@media(max-width:768px){
+
+    .contact-map iframe{
+        height:220px;
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .quick-response{
+        padding:20px;
+    }
+
+    .contact-map iframe{
+        height:200px;
+    }
+
+}
+
+/* Contact Form */
+.c-form {
+    padding: 34px 30px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.c-form h3 {
+    margin-bottom: 22px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.f-grp {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    margin-bottom: 15px;
+}
+
+.f-grp label {
+    color: var(--muted);
+
+    font-size: 0.76rem;
+    font-weight: 600;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.f-grp input,
+.f-grp textarea,
+.f-grp select {
+    width: 100%;
+    padding: 11px 13px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    outline: none;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+
+    transition: border-color 0.2s ease;
+}
+
+.f-grp input:focus,
+.f-grp textarea:focus,
+.f-grp select:focus {
+    border-color: var(--green);
+}
+
+.f-grp select option {
+    background: var(--bg);
+}
+
+.f-grp textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.f-success {
+    display: none;
+
+    margin-top: 10px;
+    padding: 14px;
+
+    background: rgba(0, 200, 83, 0.1);
+
+    border: 1px solid var(--green);
+    border-radius: 7px;
+
+    color: var(--green);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+/* ==========================================
+   CTA BAND
+========================================== */
+.cta-band {
+    padding: 80px 5%;
+
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        rgba(0, 200, 83, 0.07),
+        rgba(0, 123, 51, 0.04)
+    );
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.cta-band h2 {
+    margin-bottom: 14px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.75rem, 3.4vw, 2.7rem);
+    font-weight: 800;
+}
+
+.cta-band p {
+    margin-bottom: 34px;
+
+    color: var(--muted);
+}
+
+.cta-btns {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* ==========================================
+FOOTER
+========================================== */
+
+footer{
+padding:60px 5% 25px;
+
+background:var(--bg2);
+
+border-top:1px solid var(--border);
+
+}
+
+/* Grid Layout */
+.ft-grid{
+display:grid;
+grid-template-columns:1.6fr 1fr 1fr 0.9fr;
+gap:60px;
+}
+
+/* ==========================================
+BRAND
+========================================== */
+
+.ft-brand img{
+height:60px;
+margin-bottom:16px;
+}
+
+.ft-brand p{
+max-width:320px;
+
+color:var(--muted);
+
+font-size:.9rem;
+line-height:1.8;
+
+margin-bottom:12px;
+
+}
+
+/* Email */
+.ft-email{
+display:flex;
+align-items:center;
+gap:10px;
+
+font-size:.85rem;
+
+}
+
+.ft-email i{
+color:var(--green);
+}
+
+.ft-email a{
+color:inherit;
+text-decoration:none;
+
+transition:.3s ease;
+
+}
+
+.ft-email a:hover{
+color:var(--green);
+}
+
+/* ==========================================
+FOOTER COLUMNS
+========================================== */
+
+.ft-col h4,
+.soc-col h4{
+margin-bottom:22px;
+
+color:var(--text);
+
+font-family:'Poppins',sans-serif;
+font-size:.8rem;
+font-weight:700;
+
+text-transform:uppercase;
+letter-spacing:.12em;
+
+}
+
+.ft-col a{
+display:block;
+
+
+margin-bottom:12px;
+
+color:var(--muted);
+
+text-decoration:none;
+
+font-size:.85rem;
+
+transition:.25s ease;
+
+}
+
+.ft-col a:hover{
+color:var(--green);
+transform:translateX(4px);
+}
+
+/* ==========================================
+SOCIAL COLUMN
+========================================== */
+
+.soc-col{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.ft-soc{
+display:flex;
+align-items:center;
+justify-content:center;
+
+gap:18px;
+
+}
+
+.ft-soc a{
+width:44px;
+height:44px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.03);
+
+color:var(--muted);
+
+text-decoration:none;
+
+font-size:20px;
+
+transition:.3s ease;
+
+
+}
+
+.ft-soc a:hover{
+color:var(--green);
+
+background:rgba(0,200,83,.08);
+
+transform:translateY(-4px);
+
+}
+
+/* ==========================================
+FOOTER BOTTOM
+========================================== */
+
+.ft-bottom{
+width:100%;
+
+margin-top:45px;
+padding-top:22px;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+text-align:center;
+
+}
+
+.ft-bottom p{
+margin:0;
+
+
+color:var(--muted);
+
+font-size:.85rem;
+line-height:1.6;
+
+}
+
+/* ==========================================
+RESPONSIVE
+========================================== */
+
+@media(max-width:900px){
+
+
+.ft-grid{
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+
+
+}
+
+@media(max-width:600px){
+
+.ft-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+}
+
+.ft-brand p{
+    max-width:none;
+}
+
+.ft-email{
+    justify-content:center;
+}
+
+.soc-col{
+    align-items:center;
+}
+}
+
+/* ==========================================
+   WHATSAPP FLOAT BUTTON
+========================================== */
+.wa {
+    position: fixed;
+    right: 26px;
+    bottom: 26px;
+
+    z-index: 800;
+
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #25D366;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    box-shadow: 0 4px 22px rgba(37, 211, 102, 0.45);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.wa:hover {
+    transform: scale(1.12);
+
+    box-shadow: 0 6px 34px rgba(37, 211, 102, 0.65);
+}
+
+.wa svg {
+    width: 28px;
+    height: 28px;
+
+    fill: #fff;
+}
+
+/* ==========================================
+   FADE-IN ANIMATION
+========================================== */
+.fi {
+    opacity: 0;
+    transform: translateY(26px);
+
+    transition:
+        opacity 0.65s ease,
+        transform 0.65s ease;
+}
+
+.fi.vis {
+    opacity: 1;
+    transform: none;
+}
+
+/* ==========================================
+   DARK BAND SECTION
+========================================== */
+.dark-band {
+    background: var(--bg2);
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+/* ==========================================
+   SERVICE DETAILS (SERVICES PAGE)
+========================================== */
+
+.svc-detail{
+    margin-bottom:24px;
+
+    padding:0;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+}
+
+.svc-detail:hover{
+    transform:translateY(-4px);
+
+    border-color:rgba(0,200,83,.35);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.20);
+}
+
+.svc-detail-inner{
+    display:grid;
+
+    grid-template-columns:420px 1fr;
+
+    gap:0;
+
+    align-items:stretch;
+}
+
+/* ==========================================
+   SERVICE IMAGE
+========================================== */
+
+.svc-detail-img{
+    width:100%;
+    height:100%;
+
+    min-height:280px;
+
+    overflow:hidden;
+}
+
+.svc-detail-img img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    object-position:center;
+
+    display:block;
+
+    transition:.5s ease;
+}
+
+.svc-detail:hover .svc-detail-img img{
+    transform:scale(1.06);
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.svc-detail-body{
+    padding:35px;
+}
+
+.svc-detail-body h3{
+    margin-bottom:12px;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1.6rem;
+    font-weight:700;
+}
+
+.svc-detail-body p{
+    margin-bottom:18px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+/* ==========================================
+   TAGS
+========================================== */
+
+.tags-row{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+.tag{
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(0,200,83,.08);
+
+    border:1px solid rgba(0,200,83,.15);
+
+    color:var(--green);
+
+    font-size:.78rem;
+    font-weight:600;
+}
+
+/* ==========================================
+   FEATURES
+========================================== */
+
+.use-cases{
+    display:grid;
+
+    grid-template-columns:repeat(3,max-content);
+
+    justify-content:center;
+
+    column-gap:22px;
+    row-gap:10px;
+
+    margin-top:12px;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:992px){
+
+    .svc-detail-inner{
+        grid-template-columns:320px 1fr;
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .svc-detail-inner{
+        display:grid;
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .svc-detail-img{
+        width:100%;
+        height:240px;
+        min-height:240px;
+    }
+
+    .svc-detail-img img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+    }
+
+    .svc-detail-body{
+        padding:24px;
+    }
+
+}
+
+/* ==========================================
+   SERVICE CONTENT
+========================================== */
+
+.svc-detail-body{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    min-width:240px;
+
+    padding:35px;
+}
+
+.svc-detail-body h3{
+    margin-bottom:12px;
+
+    font-family:'Poppins',sans-serif;
+    font-size:1.7rem;
+    font-weight:700;
+
+    color:var(--text);
+}
+
+.svc-detail-body p{
+    color:var(--muted);
+
+    line-height:1.8;
+
+    margin-bottom:18px;
+}
+
+/* ==========================================
+   TECH STACK
+========================================== */
+
+.tags-row{
+    display:flex;
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin:18px 0 22px;
+}
+
+.tag{
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    background:rgba(0,200,83,.08);
+
+    border:1px solid rgba(0,200,83,.15);
+
+    color:var(--green);
+
+    font-size:.82rem;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+}
+
+.tag:hover{
+    transform:translateY(-2px);
+
+    background:rgba(0,200,83,.15);
+
+    border-color:rgba(0,200,83,.4);
+
+    box-shadow:0 8px 18px rgba(0,200,83,.12);
+}
+
+/* ==========================================
+   FEATURES
+========================================== */
+
+.use-cases{
+    display:grid;
+
+    grid-template-columns:repeat(3,max-content);
+
+    justify-content:space-between;
+
+    row-gap:12px;
+
+    margin-top:12px;
+}
+
+.svc-feat{
+    color:var(--muted);
+
+    font-size:.88rem;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+}
+
+.svc-feat::before{
+    content:"✓";
+
+    color:var(--green);
+
+    margin-right:6px;
+
+    font-weight:700;
+}
+
+.svc-feat:hover{
+    color:var(--green);
+
+    transform:translateX(4px);
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .svc-detail-body{
+        text-align:center;
+        padding:24px;
+    }
+
+    .tags-row{
+        justify-content:center;
+    }
+
+    .use-cases{
+        display:flex;
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        width:max-content;
+        margin:16px auto 0;
+
+        gap:8px;
+    }
+
+    .svc-feat{
+        font-size:.9rem;
+    }
+
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+@media (max-width: 920px) {
+
+    .about-wrap,
+    .contact-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .ft-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .nav-links,
+    .nav-cta {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        padding: 55px 5% 40px;
+
+        text-align: center;
+    }
+
+    .hero-btns {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        margin-top: 36px;
+    }
+
+    .logo-stage {
+        width: min(260px, 68vw);
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat {
+        border-bottom: 1px solid var(--border);
+    }
+
+    .mv-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .f-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 580px) {
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ft-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================
+   SERVICES STRIP & TECH STACK
+========================================== */
+
+.info-strip {
+    padding: 45px 5%;
+
+    background: var(--bg2);
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.info-strip + .info-strip {
+    border-top: none;
+}
+
+.info-title {
+    margin-bottom: 22px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.info-item {
+    padding: 12px 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    color: var(--text);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-3px);
+
+    border-color: var(--green);
+    color: var(--green);
+
+    box-shadow: 0 8px 24px rgba(0, 200, 83, 0.15);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .info-strip {
+        padding: 35px 5%;
+    }
+
+    .info-item {
+        padding: 10px 16px;
+
+        font-size: 0.8rem;
+    }
+
+    .soc-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .soc-btn i {
+        min-width: 18px;
+
+        font-size: 16px;
+    }
+}
+
+/* ==========================================
+   CURSOR GLOW EFFECT
+========================================== */
+
+body{
+    position:relative;
+}
+
+.cursor-glow{
+    position:fixed;
+
+    left:50%;
+    top:50%;
+
+    width:320px;
+    height:320px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(0,200,83,.10) 0%,
+        rgba(0,200,83,.05) 40%,
+        transparent 75%
+    );
+
+    pointer-events:none;
+
+    transform:translate(-50%,-50%);
+
+    z-index:-1;
+
+    filter:blur(40px);
+
+    transition:
+        left .08s linear,
+        top .08s linear;
+}
+
+/* Mobile Disable */
+
+@media(max-width:768px){
+
+    .cursor-glow{
+        display:none;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+         BACKGROUND LAYERS
+    =========================================== -->
+    <div class="glow-center"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- ==========================================
+         NAVIGATION
+    =========================================== -->
+    <nav id="nav">
+
+        <!-- Logo -->
+        <a
+            class="nav-logo"
+            href="#"
+            onclick="go('home'); return false;"
+        >
+            <img
+                src="E:\TEYZIX CORE\Teyzix-Web\Images\Teyzi-logo_inspyrenet.png"
+                alt="Teyzix Core Logo"
+            >
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="nav-links">
+            <li>
+                <a href="#" onclick="go('home'); return false;">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="go('about'); return false;">
+                    About
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="go('services'); return false;">
+                    Services
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="go('portfolio'); return false;">
+                    Portfolio
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="go('contact'); return false;">
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+        <!-- CTA Button -->
+        <a
+            class="nav-cta"
+            href="#"
+            onclick="go('contact'); return false;"
+        >
+            Get in Touch
+        </a>
+
+        <!-- Mobile Hamburger -->
+        <button
+            class="hamburger"
+            onclick="toggleMenu()"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </nav>
+
+    <!-- ==========================================
+         MOBILE MENU
+    =========================================== -->
+    <div
+        class="mobile-menu"
+        id="mm"
+    >
+
+        <a
+            href="#"
+            onclick="go('home'); closeMenu(); return false;"
+        >
+            Home
+        </a>
+
+        <a
+            href="#"
+            onclick="go('about'); closeMenu(); return false;"
+        >
+            About
+        </a>
+
+        <a
+            href="#"
+            onclick="go('services'); closeMenu(); return false;"
+        >
+            Services
+        </a>
+
+        <a
+            href="#"
+            onclick="go('portfolio'); closeMenu(); return false;"
+        >
+            Portfolio
+        </a>
+
+        <a
+            href="#"
+            onclick="go('contact'); closeMenu(); return false;"
+        >
+            Contact
+        </a>
+
+    </div>
+
+<!-- ==========================================
+     WHATSAPP FLOAT BUTTON
+========================================== -->
+<a
+    class="wa"
+    href="https://wa.me/923714699788"
+    target="_blank"
+    title="WhatsApp"
+>
+    <svg viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+</a>
+
+<!-- ==========================================
+     HOME PAGE
+========================================== -->
+<div
+    class="page active"
+    id="page-home"
+>
+
+    <!-- ======================================
+         HERO SECTION
+    ======================================= -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <!-- Badge -->
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Core of Innovation
+            </div>
+
+            <!-- Heading -->
+            <h1>
+                We Build
+                <em>Digital Solutions</em>
+                That Drive Growth
+            </h1>
+
+            <!-- Description -->
+            <p>
+                Teyzix Core is a software engineering company specializing in
+                web platforms, mobile applications, AI solutions & Automation
+                 and industry-driven technology innovation.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="hero-btns">
+
+                <a
+                    class="btn-primary"
+                    href="#"
+                    onclick="go('contact'); return false;"
+                >
+                    Book Free Consultation
+                </a>
+
+                <a
+                    class="btn-secondary"
+                    href="#"
+                    onclick="go('portfolio'); return false;"
+                >
+                    View Our Work
+                </a>
+
+            </div>
+
+        </div>
+        
+        <!-- ======================================
+             HERO VISUAL
+        ======================================= -->
+        <div class="hero-visual">
+
+            <div class="logo-stage">
+
+                <!-- Orbit Layers -->
+                <div class="orbit orbit-1"></div>
+                <div class="orbit orbit-2"></div>
+                <div class="orbit orbit-3"></div>
+
+                <!-- Orbit Dots -->
+                <div class="orbit-dot orbit-dot-1"></div>
+                <div class="orbit-dot orbit-dot-2"></div>
+
+                <!-- Main Logo -->
+                <img
+                    src="E:\TEYZIX CORE\Teyzix-Web\Images\hero_section_img.png"
+                    alt="Teyzix Core"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+<div class="stats">
+
+    <div class="stat">
+        <div class="stat-num">8+</div>
+        <div class="stat-lbl">
+            Service Areas
+        </div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-num">10+</div>
+        <div class="stat-lbl">
+            Technologies
+        </div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-num">AI</div>
+        <div class="stat-lbl">
+            Powered Solutions
+        </div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-num">24/7</div>
+        <div class="stat-lbl">
+            Digital Presence
+        </div>
+    </div>
+
+</div>
+
+<!-- ======================================
+     SERVICES PREVIEW
+======================================= -->
+
+<section>
+
+<div class="s-hdr center fi">
+
+    <div class="s-tag">
+        What We Do
+    </div>
+
+    <h2 class="s-title">
+        Services Built for
+        <em style="color: var(--green); font-style: normal;">
+            Scale
+        </em>
+    </h2>
+
+    <p class="s-sub">
+        From concept to deployment, we deliver innovative digital solutions
+        that help businesses grow, adapt, and succeed in a rapidly evolving
+        world.
+    </p>
+
+</div>
+
+<div class="svc-grid">
+
+<!-- Web Development -->
+<a href="#" onclick="go('services','web-development'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\Web_Dev_img.png" alt="Web Development">
+    </div>
+
+    <h3>Web Development</h3>
+
+    <p>
+        Modern, responsive, and high-performance websites built for
+        speed, engagement, and business growth.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">Responsive Design</span>
+        <span class="svc-feat">SEO Optimized</span>
+        <span class="svc-feat">High Performance</span>
+    </div>
+
+</a>
+
+<!-- Web Applications -->
+<a href="#" onclick="go('services','web-applications'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\Web_App_img.png" alt="Web Applications">
+    </div>
+
+    <h3>Web Applications</h3>
+
+    <p>
+        Scalable web platforms and business applications engineered
+        for efficiency and seamless user experiences.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">Custom Dashboards</span>
+        <span class="svc-feat">API Integration</span>
+        <span class="svc-feat">Scalable Architecture</span>
+    </div>
+
+</a>
+
+<!-- Mobile Applications -->
+<a href="#" onclick="go('services','mobile-applications'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\Mobile_App_img.png" alt="Mobile Applications">
+    </div>
+
+    <h3>Mobile Applications</h3>
+
+    <p>
+        Cross-platform mobile applications designed for seamless
+        experiences across Android and iOS devices.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">Flutter</span>
+        <span class="svc-feat">React Native</span>
+        <span class="svc-feat">App Store Ready</span>
+    </div>
+
+</a>
+
+<!-- Custom Software -->
+<a href="#" onclick="go('services','custom-software'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\Custom_Software_img.png" alt="Custom Software">
+    </div>
+
+    <h3>Custom Software</h3>
+
+    <p>
+        Tailored software solutions built around your workflows,
+        operations, and business objectives.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">Business Automation</span>
+        <span class="svc-feat">System Integration</span>
+        <span class="svc-feat">Enterprise Ready</span>
+    </div>
+
+</a>
+
+<!-- UI/UX Design -->
+<a href="#" onclick="go('services','ui-ux-design'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\UIUX _Design_img.png" alt="UI/UX Design">
+    </div>
+
+    <h3>UI/UX Design</h3>
+
+    <p>
+        User-centered interfaces and experiences designed to maximize
+        engagement, usability, and conversions.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">User Research</span>
+        <span class="svc-feat">Figma Prototypes</span>
+        <span class="svc-feat">Design Systems</span>
+    </div>
+
+</a>
+
+<!-- AI Solutions -->
+<a href="#" onclick="go('services','ai-solutions'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\AI Solutions_img.png" alt="AI Solutions">
+    </div>
+
+    <h3>AI Solutions</h3>
+
+    <p>
+        Intelligent systems and AI-powered solutions that automate
+        processes and unlock new opportunities.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">AI Automation</span>
+        <span class="svc-feat">Chatbots</span>
+        <span class="svc-feat">Generative AI</span>
+    </div>
+
+</a>
+
+<!-- Data Analytics -->
+<a href="#" onclick="go('services','data-analytics'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\Data Analytics_img.png" alt="Data Analytics">
+    </div>
+
+    <h3>Data Analytics</h3>
+
+    <p>
+        Transform raw data into actionable insights that support
+        informed business decisions.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">Data Visualization</span>
+        <span class="svc-feat">Reporting</span>
+        <span class="svc-feat">Business Intelligence</span>
+    </div>
+
+</a>
+
+<!-- Machine Learning -->
+<a href="#" onclick="go('services','machine-learning'); return false;" class="svc-card fi">
+
+    <div class="svc-thumb">
+        <img src="E:\TEYZIX CORE\Teyzix-Web\Images\Machine Learning_img.png" alt="Machine Learning">
+    </div>
+
+    <h3>Machine Learning</h3>
+
+    <p>
+        Predictive models and intelligent systems that learn from data
+        to improve outcomes and efficiency.
+    </p>
+
+    <div class="svc-feats">
+        <span class="svc-feat">Predictive Analytics</span>
+        <span class="svc-feat">Model Training</span>
+        <span class="svc-feat">Data Intelligence</span>
+    </div>
+
+</a>
+</div>
+
+</section>
+
+    <!-- ======================================
+         WHY TEYZIX CORE
+    ======================================= -->
+    
+
+        <div class="s-hdr center fi">
+
+            <div class="s-tag">
+                Why Teyzix Core
+            </div>
+
+            <h2 class="s-title">
+                Built Different.
+                <em style="color: var(--green); font-style: normal;">
+                    Deliver Better.
+                </em>
+            </h2>
+
+        </div>
+
+        <div class="why-grid">
+
+<div class="why-card fast-turnaround fi">
+    <div class="why-icon">
+        <i class="fas fa-bolt"></i>
+    </div>
+
+    <h4>Fast Turnaround</h4>
+
+    <p>
+        Agile cycles that deliver quality results without delay.
+    </p>
+</div>
+
+<div class="why-card secure-default fi">
+    <div class="why-icon">
+        <i class="fas fa-shield-alt"></i>
+    </div>
+
+    <h4>Secure by Default</h4>
+
+    <p>
+        Security best practices baked into every line of code.
+    </p>
+</div>
+
+<div class="why-card growth-focused fi">
+    <div class="why-icon">
+        <i class="fas fa-chart-line"></i>
+    </div>
+
+    <h4>Growth Focused</h4>
+
+    <p>
+        Every decision is made with your growth as the north star.
+    </p>
+</div>
+
+<div class="why-card true-partnership fi">
+    <div class="why-icon">
+        <i class="fas fa-handshake"></i>
+    </div>
+
+    <h4>True Partnership</h4>
+
+    <p>
+        Transparent communication and collaboration from day one.
+    </p>
+</div>
+
+<div class="why-card global-standards fi">
+    <div class="why-icon">
+        <i class="fas fa-globe"></i>
+    </div>
+
+    <h4>Global Standards</h4>
+
+    <p>
+        International-grade solutions with local understanding.
+    </p>
+</div>
+
+<div class="why-card post-launch fi">
+    <div class="why-icon">
+        <i class="fas fa-tools"></i>
+    </div>
+
+    <h4>Post-Launch Support</h4>
+
+    <p>
+        We stay with you after launch for updates, maintenance, optimization, and scaling support.
+    </p>
+</div>
+
+</div>
+
+<!--Review Section-->
+
+    <div class="reviews-cta">
+
+        <div class="reviews-badge">
+
+            <div class="review-stars">
+                ★★★★★
+            </div>
+
+            <div class="review-rating">
+                5.0 Rating • Google Reviews
+            </div>
+
+        </div>
+
+        <h3>
+            See What People Are Saying About Teyzix Core
+        </h3>
+
+        <p>
+            Explore authentic feedback and reviews from our growing community.
+        </p>
+
+        <a
+            href="https://www.google.com/maps/place/TEYZIX+CORE/@31.4829403,74.3343893,11z/data=!4m18!1m9!3m8!1s0xa3102ed109a135ff:0x8d530141bb2a6dad!2sTEYZIX+CORE!8m2!3d31.4829403!4d74.3343893!9m1!1b1!16s%2Fg%2F11zktrswlr!3m7!1s0xa3102ed109a135ff:0x8d530141bb2a6dad!8m2!3d31.4829403!4d74.3343893!9m1!1b1!16s%2Fg%2F11zktrswlr"
+            target="_blank"
+            class="btn-primary"
+        >
+            View Google Reviews
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     FAQ SECTION
+========================================== -->
+
+<section class="faq section fi">
+
+    <div class="container">
+
+        <div class="sec-head">
+
+    <span class="eyebrow">
+        FAQs
+    </span>
+
+    <h2>
+    Frequently Asked <span>Questions</span>
+</h2>
+
+    <p>
+        Answers to common questions about our services,
+        workflow, timelines, and project delivery process.
+    </p>
+
+</div>
+
+        <div class="faq-wrap">
+
+            <!-- FAQ 01 -->
+
+            <div class="faq-item active">
+
+                <button class="faq-question">
+
+                    What industries do you work with?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        We work with startups, SMEs, and enterprises across
+                        various industries including healthcare, education,
+                        logistics, e-commerce, fintech, real estate, and
+                        technology. Our team adapts development strategies
+                        based on your industry requirements, business goals,
+                        and operational workflows.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 02 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Can you build custom software from scratch?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Absolutely. We specialize in designing and developing
+                        custom software solutions tailored to your specific
+                        business needs. From requirement gathering and UI/UX
+                        design to development, testing, deployment, and
+                        maintenance, we manage the entire software development
+                        lifecycle.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 03 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Do you develop AI-powered solutions?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. We build AI-powered applications including
+                        intelligent chatbots, Retrieval-Augmented Generation
+                        (RAG) systems, workflow automation platforms,
+                        recommendation engines, predictive analytics
+                        solutions, and custom machine learning applications
+                        that help businesses improve efficiency and
+                        decision-making.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 04 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    How long does a project take?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Project timelines vary depending on complexity,
+                        features, integrations, and business requirements.
+                        Simple websites may take 1–2 weeks, while custom web
+                        applications, SaaS platforms, AI-powered solutions,
+                        or enterprise systems typically require 3–8 weeks or
+                        more for successful delivery.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 05 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Do you provide post-launch support?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. We offer ongoing maintenance and support services
+                        after deployment, including bug fixes, performance
+                        optimization, security updates, monitoring, backups,
+                        infrastructure management, and feature enhancements
+                        to ensure long-term reliability and growth.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 06 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Can you redesign existing software or websites?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. Whether you need a complete redesign or gradual
+                        modernization, we can improve your existing website,
+                        application, or software system by enhancing user
+                        experience, performance, scalability, security, and
+                        overall visual appeal while preserving critical
+                        business functionality.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 07 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Do you sign NDAs and protect intellectual property?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Client confidentiality is a priority. We are
+                        comfortable signing Non-Disclosure Agreements (NDAs)
+                        and follow secure development practices to protect
+                        sensitive information, proprietary business data,
+                        source code, and intellectual property throughout
+                        the project lifecycle.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FAQ 08 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    How do we get started?
+
+                    <span>+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Getting started is simple. Contact our team with your
+                        project requirements, goals, or ideas. We will discuss
+                        your needs, analyze the scope, provide recommendations,
+                        share a proposed timeline and development roadmap, and
+                        then begin the project once everything is approved.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+<!-- ======================================
+         CALL TO ACTION
+    ======================================= -->
+    <div class="cta-band fi">
+
+        <h2>
+            Ready to Build Something
+            <em style="color: var(--green); font-style: normal;">
+                Great?
+            </em>
+        </h2>
+
+        <p>
+            Let's discuss your project and turn your idea into a
+            high-performance digital product.
+        </p>
+
+        <div class="cta-btns">
+
+            <a
+                class="btn-primary"
+                href="#"
+                onclick="go('contact'); return false;"
+            >
+                Book Free Consultation
+            </a>
+
+            <a
+                class="btn-secondary"
+                href="https://wa.me/923714699788"
+                target="_blank"
+            >
+                Request Proposal
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     ABOUT PAGE
+========================================== -->
+<div
+    class="page"
+    id="page-about"
+>
+
+    <section>
+
+        <div class="about-wrap fi">
+
+            <!-- About Content -->
+            <div>
+
+                <div class="s-tag">
+                    About Us
+                </div>
+
+                <h2 class="s-title">
+                    A Studio Built on
+                    <em style="color: var(--green); font-style: normal;">
+                        Purpose
+                    </em>
+                </h2>
+
+                <p
+                    style="
+                        color: var(--muted);
+                        line-height: 1.75;
+                        margin-bottom: 16px;
+                    "
+                >
+                     Teyzix Core is a technology-driven company dedicated to building innovative digital solutions that help businesses, startups, and organizations thrive in the digital era. From modern websites and web applications to mobile apps, AI-powered systems, and custom software, we transform ideas into scalable products designed for performance, reliability, and long-term growth.
+
+                </p>
+
+                <p
+                    style="
+                        color: var(--muted);
+                        line-height: 1.75;
+                    "
+                >
+                     Guided by our vision of being the "Core of Innovation", we combine technical expertise, creative problem-solving, and user-focused design to deliver impactful digital experiences. Whether launching a new product, streamlining operations, or leveraging emerging technologies, Teyzix Core partners with clients to create solutions that drive innovation, efficiency, and measurable business success.
+
+                </p>
+
+                <!-- Mission & Vision -->
+                <div class="mv-grid">
+
+                    <div class="mv-card">
+
+                        <h4>Our Mission</h4>
+
+                        <p>
+                            To empower businesses and individuals through innovative technology solutions that drive growth, efficiency, and digital transformation.
+                        </p>
+
+                    </div>
+
+                    <div class="mv-card">
+
+                        <h4>Our Vision</h4>
+
+                        <p>
+                        To become a globally recognized technology company known for innovation, excellence, and creating impactful digital experiences.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Company Logo -->
+            <div class="about-logo">
+
+                <img
+                    src="E:\TEYZIX CORE\Teyzix-Web\Images\hero_section_img.png"
+                    alt="Teyzix Core"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+<!-- ======================================
+     OUR VALUES
+======================================= -->
+
+<section class="values-section">
+
+    <div class="s-hdr center fi">
+
+        <div class="s-tag">
+            Our Values
+        </div>
+
+        <h2 class="s-title">
+            The Values Behind
+            <em style="color: var(--green); font-style: normal;">
+                Everything We Build
+            </em>
+        </h2>
+
+    </div>
+
+    <div class="val-list">
+
+        <div class="val-item fi">
+
+            <div class="val-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+
+            <div>
+                <h5>Innovation Driven</h5>
+
+                <p>
+                    We embrace emerging technologies and bold ideas to create digital solutions that shape the future.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="val-item fi">
+
+            <div class="val-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+
+            <div>
+                <h5>Excellence by Design</h5>
+
+                <p>
+                    Every product we build is crafted with precision, performance, and attention to detail.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="val-item fi">
+
+            <div class="val-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <div>
+                <h5>Integrity & Trust</h5>
+
+                <p>
+                    Transparency, accountability, and professionalism form the foundation of every partnership.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="val-item fi">
+
+            <div class="val-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+
+            <div>
+                <h5>Collaborative Success</h5>
+
+                <p>
+                    We work closely with our clients, transforming ideas into impactful digital experiences together.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="val-item fi">
+
+            <div class="val-icon">
+                <i class="fas fa-bullseye"></i>
+            </div>
+
+            <div>
+                <h5>Results That Matter</h5>
+
+                <p>
+                    We focus on delivering measurable outcomes that support long-term growth and business success.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ======================================
+     END OUR VALUES
+======================================= -->
+
+
+    <!-- ======================================
+         ABOUT PAGE CTA
+    ======================================= -->
+    <div class="cta-band fi">
+
+        <h2>
+            Let's Work
+            <em style="color: var(--green); font-style: normal;">
+                Together
+            </em>
+        </h2>
+
+        <p>
+            We'd love to hear about your project and explore how Teyzix Core
+            can help.
+        </p>
+
+        <div class="cta-btns">
+
+            <a
+                class="btn-primary"
+                href="#"
+                onclick="go('contact'); return false;"
+            >
+                Get in Touch
+            </a>
+
+            <a
+                class="btn-secondary"
+                href="#"
+                onclick="go('services'); return false;"
+            >
+                Explore Services
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     SERVICES PAGE
+========================================== -->
+<div
+    class="page"
+    id="page-services"
+>
+
+    <section>
+
+        <div class="s-hdr center fi">
+
+            <div class="s-tag">
+                Our Services
+            </div>
+
+            <h2 class="s-title">
+                Technology Solutions
+                <em style="color: var(--green); font-style: normal;">
+                    Built for Growth
+                </em>
+            </h2>
+
+            <p class="s-sub">
+                From web platforms and mobile applications to AI, data,
+                and machine learning solutions, we help businesses build,
+                innovate, and scale with confidence.
+            </p>
+
+        </div>
+
+<!-- ==================================
+     WEB DEVELOPMENT
+=================================== -->
+
+<div id="web-development" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="./Images/Web_Dev_img.png" alt="Web Development">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>Web Development</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Modern, responsive, and high-performance websites built for speed,
+                engagement, and business growth.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">React</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Tailwind CSS</span>
+            </div>
+
+            <div class="use-cases">
+                <span class="svc-feat">Responsive Design</span>
+                <span class="svc-feat">SEO Optimized</span>
+                <span class="svc-feat">High Performance</span>
+                <span class="svc-feat">CMS Integration</span>
+                <span class="svc-feat">E-Commerce Ready</span>
+                <span class="svc-feat">Security Focused</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     WEB APPLICATIONS
+=================================== -->
+
+<div id="web-applications" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="./Images/Web_App_img.png" alt="Web Applications">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>Web Applications</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Scalable web platforms and business applications engineered for
+                efficiency and seamless user experiences.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">React</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">PostgreSQL</span>
+            </div>
+
+            <div class="use-cases">
+                <span class="svc-feat">Custom Dashboards</span>
+                <span class="svc-feat">API Integration</span>
+                <span class="svc-feat">Scalable Architecture</span>
+                <span class="svc-feat">Role Management</span>
+                <span class="svc-feat">Cloud Deployment</span>
+                <span class="svc-feat">Real-Time Features</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     MOBILE APPLICATIONS
+=================================== -->
+
+<div id="mobile-applications" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="./Images/Mobile_App_img.png" alt="Mobile Applications">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>Mobile Applications</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Cross-platform mobile applications designed for seamless
+                experiences across Android and iOS devices.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">Flutter</span>
+                <span class="tag">React Native</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">REST APIs</span>
+            </div>
+
+            <div class="use-cases">
+    <span class="svc-feat">Flutter Development</span>
+    <span class="svc-feat">React Native</span>
+    <span class="svc-feat">App Store Ready</span>
+    <span class="svc-feat">Push Notifications</span>
+    <span class="svc-feat">API Integration</span>
+    <span class="svc-feat">Cross Platform</span>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     CUSTOM SOFTWARE
+=================================== -->
+
+<div id="custom-software" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="./Images/Custom_Software_img.png" alt="Custom Software">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>Custom Software</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Tailored software solutions built around your workflows,
+                operations, and business objectives.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">Python</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Docker</span>
+                <span class="tag">PostgreSQL</span>
+            </div>
+
+            <div class="use-cases">
+    <span class="svc-feat">Business Automation</span>
+    <span class="svc-feat">System Integration</span>
+    <span class="svc-feat">Enterprise Ready</span>
+    <span class="svc-feat">Workflow Management</span>
+    <span class="svc-feat">Cloud Solutions</span>
+    <span class="svc-feat">Custom Architecture</span>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     UI / UX DESIGN
+=================================== -->
+
+<div id="ui-ux-design" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="Images\UIUX _Design_img.png" alt="UI UX Design">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>UI/UX Design</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                User-centered interfaces and experiences designed to maximize
+                engagement, usability, and conversions.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">Figma</span>
+                <span class="tag">Wireframing</span>
+                <span class="tag">Prototyping</span>
+                <span class="tag">Design Systems</span>
+            </div>
+
+            <div class="use-cases">
+    <span class="svc-feat">User Research</span>
+    <span class="svc-feat">Figma Prototypes</span>
+    <span class="svc-feat">Design Systems</span>
+    <span class="svc-feat">Wireframing</span>
+    <span class="svc-feat">Interactive Prototypes</span>
+    <span class="svc-feat">UX Optimization</span>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     AI SOLUTIONS
+=================================== -->
+
+<div id="ai-solutions" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="Images\AI Solutions_img.png" alt="AI Solutions">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>AI Solutions</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Intelligent systems and AI-powered solutions that automate
+                processes and unlock new opportunities.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">OpenAI</span>
+                <span class="tag">LangChain</span>
+                <span class="tag">Python</span>
+                <span class="tag">AI Automation</span>
+            </div>
+
+            <div class="use-cases">
+    <span class="svc-feat">AI Automation</span>
+    <span class="svc-feat">Chatbots</span>
+    <span class="svc-feat">Generative AI</span>
+    <span class="svc-feat">AI Agents</span>
+    <span class="svc-feat">RAG Systems</span>
+    <span class="svc-feat">Process Automation</span>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     DATA ANALYTICS
+=================================== -->
+
+<div id="data-analytics" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="Images\Data Analytics_img.png" alt="Data Analytics">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>Data Analytics</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Transform raw data into actionable insights that support
+                informed business decisions.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">Power BI</span>
+                <span class="tag">Python</span>
+                <span class="tag">SQL</span>
+                <span class="tag">Excel</span>
+            </div>
+
+            <div class="use-cases">
+    <span class="svc-feat">Data Visualization</span>
+    <span class="svc-feat">Reporting</span>
+    <span class="svc-feat">Business Intelligence</span>
+    <span class="svc-feat">Dashboard Development</span>
+    <span class="svc-feat">Trend Analysis</span>
+    <span class="svc-feat">KPI Monitoring</span>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==================================
+     MACHINE LEARNING
+=================================== -->
+
+<div id="machine-learning" class="svc-detail fi">
+
+    <div class="svc-detail-inner">
+
+        <div class="svc-detail-img">
+            <img src="Images\Machine Learning_img.png" alt="Machine Learning">
+        </div>
+
+        <div class="svc-detail-body">
+
+            <h3>Machine Learning</h3>
+
+            <p style="color: var(--muted); line-height: 1.72; margin-bottom: 14px;">
+                Predictive models and intelligent systems that learn from data
+                to improve outcomes and efficiency.
+            </p>
+
+            <div class="tags-row">
+                <span class="tag">TensorFlow</span>
+                <span class="tag">Scikit-Learn</span>
+                <span class="tag">Python</span>
+                <span class="tag">Pandas</span>
+            </div>
+
+            <div class="use-cases">
+    <span class="svc-feat">Predictive Analytics</span>
+    <span class="svc-feat">Model Training</span>
+    <span class="svc-feat">Data Intelligence</span>
+    <span class="svc-feat">Computer Vision</span>
+    <span class="svc-feat">NLP Solutions</span>
+    <span class="svc-feat">Recommendation Systems</span>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- ======================================
+         SERVICES CTA
+    ======================================= -->
+    <div class="cta-band fi">
+
+         <h2>
+        Let's Build Something
+        <em style="color: var(--green); font-style: normal;">
+            Extraordinary
+        </em>
+         </h2>
+
+        <p>
+        Whether you need a website, web application, mobile app, AI-powered solution,
+        or custom software, our team is ready to transform your vision into a scalable
+        digital product.
+        </p>
+
+         <div class="cta-btns">
+
+        <a
+            class="btn-primary"
+            href="#"
+            onclick="go('contact'); return false;"
+        >
+            Start Your Project
+        </a>
+
+        <a
+            class="btn-secondary"
+            href="#"
+            onclick="go('about'); return false;"
+        >
+            Learn More
+        </a>
+
+    </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     PORTFOLIO PAGE
+========================================== -->
+<div
+    class="page"
+    id="page-portfolio"
+>
+
+    <section>
+
+        <!-- Section Header -->
+        <div class="s-hdr center fi">
+
+            <div class="s-tag">
+                Our Work
+            </div>
+
+            <h2 class="s-title">
+                Projects That
+                <em style="color: var(--green); font-style: normal;">
+                    Speak for Themselves
+                </em>
+            </h2>
+
+            <p class="s-sub">
+                A selection of solutions we've built for clients across
+                industries worldwide.
+            </p>
+
+        </div>
+
+       
+
+<div class="featured-grid">
+
+<!-- =========================================================
+PROJECT 01
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-01.png" alt="Multi Agent AI Workflow Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Multi-Agent AI Workflow Platform</h3>
+
+        <p>
+            Intelligent orchestration platform enabling AI agents
+            to collaborate, execute tools, and automate
+            complex workflows.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">LangGraph</span>
+            <span class="tag">React</span>
+            <span class="tag">OpenRouter</span>
+            <span class="tag">Ollama</span>
+        </div>
+
+        <div class="proj-result">
+            Autonomous AI collaboration with workflow automation
+            and execution traceability.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+PROJECT 02
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-02.png" alt="Production Grade RAG Intelligence Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Production-Grade RAG Intelligence Platform</h3>
+
+        <p>
+            Enterprise AI platform featuring hybrid retrieval,
+            intelligent reranking, automated evaluation, and
+            secure knowledge search.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">LangChain</span>
+            <span class="tag">FAISS</span>
+            <span class="tag">RAGAS</span>
+        </div>
+
+        <div class="proj-result">
+            Enterprise knowledge retrieval with evaluation-driven
+            answer quality and secure AI workflows.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 03
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-03.png" alt="Collaborative Workspace Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Real-Time Collaborative Workspace Platform</h3>
+
+        <p>
+            Multi-user collaboration environment supporting
+            synchronized editing, communication, and productivity
+            workflows.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">Redis</span>
+            <span class="tag">PostgreSQL</span>
+        </div>
+
+        <div class="proj-result">
+            Real-time collaboration with synchronized updates
+            and seamless team productivity.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+PROJECT 04
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-04.png" alt="Project Resource Management Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Enterprise Project Management Platform</h3>
+
+        <p>
+            SaaS platform for project planning, resource allocation,
+            task management, collaboration, and operational visibility.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Socket.IO</span>
+            <span class="tag">Docker</span>
+        </div>
+
+        <div class="proj-result">
+            Centralized project execution with scalable team
+            collaboration and reporting.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<button
+    class="show-more-btn"
+    onclick="toggleProjects()">
+
+    Explore More Projects →
+
+</button>
+
+ <!-- Portfolio Grid -->
+        <div class="port-grid">
+
+<div id="more-projects" class="hidden-projects">
+    <div class="projects-wrap">
+
+<!-- =========================================================
+PROJECT 05
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-05.png" alt="Ride Sharing Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Real-Time Ride Sharing System</h3>
+
+        <p>
+            Ride-hailing ecosystem featuring live GPS tracking,
+            ride lifecycle management, and dynamic fare calculation.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Flutter</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Google Maps</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">FCM</span>
+        </div>
+
+        <div class="proj-result">
+            Live driver tracking with real-time communication
+            and optimized ride operations.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 06
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-06.png" alt="Business Intelligence Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>AI Business Intelligence Platform</h3>
+
+        <p>
+            Predictive analytics platform delivering forecasting,
+            business intelligence, and executive-level decision
+            support dashboards.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">Prophet</span>
+            <span class="tag">Plotly</span>
+            <span class="tag">ML</span>
+        </div>
+
+        <div class="proj-result">
+            Actionable insights through forecasting, predictive
+            modeling, and business analytics.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+PROJECT 07
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-07.png" alt="Microservices Order Processing System">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Event-Driven Order Processing Platform</h3>
+
+        <p>
+            Distributed microservices architecture supporting
+            inventory validation, payment workflows, and
+            asynchronous order processing.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">RabbitMQ</span>
+            <span class="tag">Docker</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Redis</span>
+        </div>
+
+        <div class="proj-result">
+            Scalable event-driven backend with resilient service
+            communication and fault recovery.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 08
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-08.png" alt="Distributed Task Queue System">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Distributed Task Queue System</h3>
+
+        <p>
+            Celery-inspired execution engine supporting task
+            dependencies, priority scheduling, and worker
+            orchestration.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Redis Streams</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+        </div>
+
+        <div class="proj-result">
+            Reliable distributed processing with observability,
+            scaling, and dependency management.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 09
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-09.png" alt="Field Workforce Management Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Field Workforce Management Platform</h3>
+
+        <p>
+            Mobile workforce solution for technician tracking,
+            job assignment, service reporting, and field operations.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Flutter</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">GPS</span>
+            <span class="tag">Realtime DB</span>
+            <span class="tag">REST API</span>
+        </div>
+
+        <div class="proj-result">
+            Streamlined field operations with workforce visibility, service execution tracking, and intelligent resource management.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 10
+========================================================= -->
+
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-10.png" alt="Enterprise SaaS UX Design System">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Enterprise SaaS UX Design System</h3>
+
+        <p>
+            Complete UX ecosystem covering research, wireframing,
+            prototyping, design systems, and enterprise usability.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">Design System</span>
+            <span class="tag">UX Research</span>
+            <span class="tag">Prototyping</span>
+        </div>
+
+        <div class="proj-result">
+            Scalable design framework delivering consistent and
+            user-centered digital experiences.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 11
+========================================================= -->
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-11.png" alt="Vendor Management Platform">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Vendor Management & Quotation Platform</h3>
+
+        <p>
+            Enterprise procurement solution for vendor onboarding,
+            quotation management, proposal comparison, and approval
+            workflows.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">REST API</span>
+            <span class="tag">Full Stack</span>
+        </div>
+
+        <div class="proj-result">
+            Streamlined vendor operations with centralized quotation
+            tracking and procurement visibility.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+PROJECT 12
+========================================================= -->
+<div class="proj-card fi">
+
+    <div class="proj-thumb">
+        <img src="./Images/project-12.png" alt="Automated Backup Management System">
+    </div>
+
+    <div class="proj-body">
+
+        <h3>Automated Backup & Recovery Platform</h3>
+
+        <p>
+            Intelligent backup management system supporting versioning,
+            scheduled backups, recovery workflows, and operational
+            monitoring.
+        </p>
+
+        <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">APScheduler</span>
+            <span class="tag">Automation</span>
+        </div>
+
+        <div class="proj-result">
+            Automated backup operations with recovery management,
+            monitoring, and backup integrity verification.
+        </div>
+
+        <div class="proj-actions">
+            <a href="#" class="btn-primary">Live Demo</a>
+            <a href="#" class="btn-secondary">View Project</a>
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+</div>
+
+    </section>
+
+    <!-- ======================================
+         PORTFOLIO CTA
+    ======================================= -->
+    <div class="cta-band fi">
+
+        <h2>
+            Your Project Could Be
+            <em style="color: var(--green); font-style: normal;">
+                Next
+            </em>
+        </h2>
+
+        <p>
+            Let's build something that delivers real results for your business.
+        </p>
+
+        <div class="cta-btns">
+
+            <a
+                class="btn-primary"
+                href="#"
+                onclick="go('contact'); return false;"
+            >
+                Start Your Project
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     CONTACT PAGE
+========================================== -->
+<div
+    class="page"
+    id="page-contact"
+>
+
+    <section>
+
+        <!-- Section Header -->
+        <div class="s-hdr center fi">
+
+            <div class="s-tag">
+                Contact Us
+            </div>
+
+            <h2 class="s-title">
+                Let's Build Something
+                <em style="color: var(--green); font-style: normal;">
+                    Together
+                </em>
+            </h2>
+
+            <p class="s-sub">
+                Ready to start your project? Reach out and we'll get back to
+                you within 24 hours.
+            </p>
+
+        </div>
+
+        <div class="contact-wrap">
+
+            <!-- ==================================
+                 CONTACT INFORMATION
+            =================================== -->
+            <div class="c-info fi">
+
+                <!-- Email -->
+                <div class="c-item">
+
+                    <div class="c-ico">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+
+                    <div>
+                        <div class="c-lbl">
+                            Email
+                        </div>
+
+                        <a href="mailto:contact@teyzixcore.com">
+                            contact@teyzixcore.com
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="c-item">
+
+                    <div class="c-ico">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+
+                    <div>
+                        <div class="c-lbl">
+                            WhatsApp
+                        </div>
+
+                        <a
+                            href="https://wa.me/923714699788"
+                            target="_blank"
+                        >
+                            +92 371 469 9788
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Social -->
+<!-- Social Links -->
+<div class="c-item">
+
+    <div class="c-ico">
+        <i class="fas fa-share-nodes"></i>
+    </div>
+
+    <div style="width:100%;">
+
+        <div class="c-lbl">
+            Follow Us
+        </div>
+
+        <div class="soc-row">
+
+            <a
+                class="soc-btn"
+                href="https://www.linkedin.com/company/teyzixcore/"
+                target="_blank"
+            >
+                <i class="fab fa-linkedin-in"></i>
+                LinkedIn
+            </a>
+
+            <a
+                class="soc-btn"
+                href="https://www.instagram.com/teyzixcore?igsh=MXVrMWI5aHpvemtuaA=="
+                target="_blank"
+            >
+                <i class="fab fa-instagram"></i>
+                Instagram
+            </a>
+
+            <a
+                class="soc-btn"
+                href="https://www.threads.com/@teyzixcore"
+                target="_blank"
+            >
+                <i class="fa-brands fa-threads"></i>
+                Threads
+            </a>
+
+            <a
+                class="soc-btn"
+                href="https://www.facebook.com/share/1D68YsTEqK/"
+                target="_blank"
+            >
+                <i class="fab fa-facebook-f"></i>
+                Facebook
+            </a>
+
+            <a
+                class="soc-btn"
+                href="https://www.tiktok.com/@teyzixcore"
+                target="_blank"
+            >
+                <i class="fab fa-tiktok"></i>
+                TikTok
+            </a>
+
+            <a
+                class="soc-btn"
+                href="https://wa.me/923714699788"
+                target="_blank"
+            >
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     QUICK RESPONSE GUARANTEE
+========================================== -->
+
+<div class="quick-response">
+
+    <h4 class="quick-response-title">
+        <i class="fas fa-bolt"></i>
+        Quick Response Guarantee
+    </h4>
+
+    <p>
+        We typically respond to all inquiries within
+        <strong style="color:var(--green);">24 hours</strong>.
+        For urgent projects and time-sensitive requests,
+        WhatsApp is the fastest way to connect with our team.
+    </p>
+
+    <div class="quick-stats">
+
+        <div class="quick-stat">
+            <div class="quick-stat-value">&lt;24h</div>
+            <div class="quick-stat-label">Response Time</div>
+        </div>
+
+        <div class="quick-stat">
+            <div class="quick-stat-value">7 Days</div>
+            <div class="quick-stat-label">Support Available</div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     GOOGLE MAP
+========================================== -->
+
+<div class="contact-map">
+
+    <div class="contact-map-title">
+        <i class="fas fa-map-marker-alt"></i>
+        Our Location
+    </div>
+
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d217759.99380853778!2d74.3343893!3d31.482940349999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3102ed109a135ff%3A0x8d530141bb2a6dad!2sTEYZIX%20CORE!5e0!3m2!1sen!2s!4v1782095821607!5m2!1sen!2s"
+        loading="lazy"
+        allowfullscreen>
+    </iframe>
+
+</div>
+</div>
+
+<!-- ==================================
+     CONTACT FORM
+=================================== -->
+
+<div class="c-form fi">
+
+<h3>Start Your Project</h3>
+
+<p
+    style="
+        color:var(--muted);
+        margin-bottom:24px;
+        line-height:1.7;
+    "
+>
+    Tell us about your project and goals. We'll recommend the right solution tailored to your business needs.
+</p>
+
+<div class="f-row">
+
+    <div class="f-grp">
+        <label>First Name</label>
+        <input
+            type="text"
+            placeholder="Your First Name"
+        >
+    </div>
+
+    <div class="f-grp">
+        <label>Last Name</label>
+        <input
+            type="text"
+            placeholder="Your Last Name"
+        >
+    </div>
+
+</div>
+
+<div class="f-grp">
+    <label>Email Address</label>
+
+    <input
+        type="email"
+        placeholder="yourname@company.com"
+    >
+</div>
+
+<div class="f-grp">
+    <label>Service Required</label>
+
+    <select>
+        <option>Web Development</option>
+        <option>Web Applications</option>
+        <option>Mobile Applications</option>
+        <option>Custom Software</option>
+        <option>UI/UX Design</option>
+        <option>AI Solutions</option>
+        <option>Data Analytics</option>
+        <option>Machine Learning</option>
+        <option>Other</option>
+    </select>
+</div>
+
+<div class="f-grp">
+    <label>Estimated Budget</label>
+
+    <select>
+        <option>Select Budget Range</option>
+        <option>Under $500</option>
+        <option>$500 – $2,000</option>
+        <option>$2,000 – $5,000</option>
+        <option>$5,000 – $10,000</option>
+        <option>$10,000+</option>
+    </select>
+</div>
+
+<div class="f-grp">
+    <label>Project Details</label>
+
+    <textarea
+        placeholder="Tell us about your project, objectives, timeline, target audience, and any specific requirements..."
+    ></textarea>
+</div>
+
+<button
+    class="btn-primary"
+    onclick="submitForm()"
+    style="
+        width:100%;
+        font-size:.95rem;
+        padding:15px;
+    "
+>
+    <i class="fas fa-paper-plane"></i>
+    Send Message
+</button>
+
+<p
+    style="
+        text-align:center;
+        color:var(--muted);
+        font-size:.8rem;
+        margin-top:15px;
+    "
+>
+    🔒 Your information is secure and will never be shared with third parties.
+</p>
+
+<div
+    class="f-success"
+    id="fSuccess"
+>
+    <i class="fas fa-circle-check"></i>
+    Thank you! Your message has been received. Our team will contact you shortly.
+</div>
+
+</div>
+
+    </section>
+
+</div>
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+<footer>
+
+    <div class="ft-grid">
+
+        <!-- Brand -->
+        <div class="ft-brand">
+
+            <img
+                src="E:\TEYZIX CORE\Teyzix-Web\Images\Teyzi-logo_.png"
+                alt="Teyzix Core"
+            >
+
+            <p>
+                Building scalable software, AI-powered solutions, and digital products for modern businesses.
+            </p>
+
+            <p class="ft-email">
+    <i class="fas fa-envelope"></i>
+
+    <a href="mailto:contact@teyzixcore.com">
+        contact@teyzixcore.com
+    </a>
+</p>
+
+        </div>
+
+        <!-- Company Links -->
+        <div class="ft-col">
+
+            <h4>Company</h4>
+
+            <a href="#" onclick="go('home'); return false;">
+                Home
+            </a>
+
+            <a href="#" onclick="go('about'); return false;">
+                About
+            </a>
+
+            <a href="#" onclick="go('portfolio'); return false;">
+                Portfolio
+            </a>
+
+            <a href="#" onclick="go('contact'); return false;">
+                Contact
+            </a>
+
+        </div>
+
+        <!-- Services Links -->
+<div class="ft-col">
+
+    <h4>Services</h4>
+
+    <a href="#"
+   onclick="go('services','web-development'); return false;">
+   Web Development
+</a>
+
+<a href="#"
+   onclick="go('services','web-applications'); return false;">
+   Web Applications
+</a>
+
+<a href="#"
+   onclick="go('services','mobile-applications'); return false;">
+   Mobile Applications
+</a>
+
+<a href="#"
+   onclick="go('services','custom-software'); return false;">
+   Custom Software
+</a>
+
+<a href="#"
+   onclick="go('services','ui-ux-design'); return false;">
+   UI/UX Design
+</a>
+
+<a href="#"
+   onclick="go('services','ai-solutions'); return false;">
+   AI Solutions
+</a>
+
+<a href="#"
+   onclick="go('services','data-analytics'); return false;">
+   Data Analytics
+</a>
+
+<a href="#"
+   onclick="go('services','machine-learning'); return false;">
+   Machine Learning
+</a>
+
+</div>
+
+<!-- Social Icons -->
+    
+<div class="soc-col">
+
+    <h4>Follow Us</h4>
+
+<div class="ft-soc">
+
+    <a href="https://www.linkedin.com/company/teyzixcore/" target="_blank">
+        <i class="fab fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://www.instagram.com/teyzixcore?igsh=MXVrMWI5aHpvemtuaA==" target="_blank">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <a href="https://www.threads.com/@teyzixcore" target="_blank">
+        <i class="fa-brands fa-threads"></i>
+    </a>
+
+    <a href="https://www.facebook.com/share/18fLcvuh6R/" target="_blank">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <a href="https://tiktok.com/@teyzixcore" target="_blank">
+        <i class="fab fa-tiktok"></i>
+    </a>
+
+    <a href="https://wa.me/923714699788" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</div>
+
+</div>
+
+    <!-- Footer Bottom -->
+<div class="ft-bottom">
+    <p>© 2026 Teyzix Core. All Rights Reserved.</p>
+</div>
+
+</footer>
+
+<div class="cursor-glow"></div>
+
+<script>
+
+const glow = document.querySelector('.cursor-glow');
+
+document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+});
+
+    /* ==========================================
+       PAGE NAVIGATION
+    ========================================== */
+    function go(pageName, targetId = null) {
+
+    document
+        .querySelectorAll('.page')
+        .forEach(page => page.classList.remove('active'));
+
+    document
+        .getElementById(`page-${pageName}`)
+        .classList.add('active');
+
+    setTimeout(() => {
+
+        if(targetId){
+
+            document
+                .getElementById(targetId)
+                ?.scrollIntoView({
+                    behavior:'smooth',
+                    block:'start'
+                });
+
+        }else{
+
+            window.scrollTo({
+                top:0,
+                behavior:'smooth'
+            });
+
+        }
+
+    },100);
+
+    setTimeout(observeFade,100);
+}
+
+    /* ==========================================
+       MOBILE MENU
+    ========================================== */
+    function toggleMenu() {
+        document
+            .getElementById('mm')
+            .classList.toggle('open');
+    }
+
+    function closeMenu() {
+        document
+            .getElementById('mm')
+            .classList.remove('open');
+    }
+
+    /* ==========================================
+       CONTACT FORM
+    ========================================== */
+    function submitForm() {
+
+        document
+            .getElementById('fSuccess')
+            .style.display = 'block';
+    }
+
+    /* ==========================================
+       FADE-IN OBSERVER
+    ========================================== */
+    function observeFade() {
+
+        const elements =
+            document.querySelectorAll('.fi:not(.vis)');
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach((entry, index) => {
+
+                    if (entry.isIntersecting) {
+
+                        setTimeout(() => {
+                            entry.target.classList.add('vis');
+                        }, index * 70);
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.08
+            }
+        );
+
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    /* ==========================================
+       INITIALIZATION
+    ========================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+
+        observeFade();
+
+        window.addEventListener('scroll', () => {
+
+            const nav =
+                document.getElementById('nav');
+
+            nav.style.background =
+                window.scrollY > 10
+                    ? 'rgba(11,15,20,0.97)'
+                    : 'rgba(11,15,20,0.88)';
+        });
+
+    });
+
+
+function toggleProjects(){
+
+    const projects =
+        document.getElementById("more-projects");
+
+    const button =
+        document.querySelector(".show-more-btn");
+
+    projects.classList.toggle("show");
+
+    if(projects.classList.contains("show")){
+
+        button.innerText = "Hide Projects ↑";
+
+    }else{
+
+        button.innerText = "Explore More Projects →";
+
+    }
+
+}
+
+document.querySelectorAll('.faq-question')
+.forEach(button => {
+
+    button.addEventListener('click', () => {
+
+        const faq =
+            button.parentElement;
+
+        faq.classList.toggle('active');
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
